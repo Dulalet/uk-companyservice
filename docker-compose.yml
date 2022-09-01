@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: postgres:14
+    image: "postgres:14"
     environment:
       - POSTGRES_PASSWORD=qwerty
       - POSTGRES_USER=daulet
@@ -16,7 +16,8 @@ services:
     #   timeout: 5s
     #   retries: 5
   backend:
-    build: .
+    build: "."
+    image: "company-service:latest"
     depends_on:
       - "db"
     environment:

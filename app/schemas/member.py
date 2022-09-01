@@ -1,10 +1,11 @@
+from uuid import UUID
 from pydantic import BaseModel
 
 from typing import Optional, Sequence
 
 
 class MemberBase(BaseModel):
-    user_id: int
+    user_uuid: UUID
 
 
 class MemberCreate(MemberBase):

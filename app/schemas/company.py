@@ -1,11 +1,11 @@
-from unicodedata import name
-from pydantic import BaseModel, HttpUrl
+from uuid import UUID
+from pydantic import BaseModel
 
-from typing import List, Optional, Sequence
+from typing import Optional, Sequence
 
 
 class UserIn(BaseModel):
-    user_id: int
+    user_uuid: UUID
 
 
 class CompanyBase(BaseModel):
@@ -26,6 +26,7 @@ class CompanyBase(BaseModel):
 
 class CompanyCreate(CompanyBase):
     pass
+
 
 class CompanyUpdate(CompanyBase):
     id: int

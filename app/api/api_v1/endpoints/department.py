@@ -74,7 +74,7 @@ def list_departments(
     return departments
 
 
-@router.put("/", status_code=201, response_model=Department)
+@router.patch("/", status_code=201, response_model=Department)
 def update_department(
     *,
     department_in: DepartmentUpdate,

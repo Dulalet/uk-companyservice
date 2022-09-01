@@ -74,7 +74,7 @@ def list_members(
     return members
 
 
-@router.put("/", status_code=201, response_model=Member)
+@router.patch("/", status_code=201, response_model=Member)
 def update_member(
     *,
     member_in: MemberUpdate,

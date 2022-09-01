@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Any, List
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from psycopg2 import errors
 
 from app import crud
 from app.api import deps
@@ -39,10 +40,16 @@ def create_catalog(
     try:
         catalog = crud.catalog.create(db=db, obj_in=catalog_in)
     except IntegrityError as e:
-        print(e)
-        raise HTTPException(
-            status_code=400, detail=f"Catalog already exists"
-        )
+        try:
+            raise e.orig
+        except errors.UniqueViolation:
+            raise HTTPException(
+                status_code=400, detail=f"Catalog already exists"
+            )
+        except errors.ForeignKeyViolation:
+            raise HTTPException(
+                status_code=400, detail=f"No such department"
+            )
     return catalog
 
 
@@ -75,7 +82,7 @@ def list_catalog(
     return catalogs
 
 
-@router.put("/", status_code=201, response_model=Catalog)
+@router.patch("/", status_code=201, response_model=Catalog)
 def update_catalog(
     *,
     catalog_in: CatalogUpdate,

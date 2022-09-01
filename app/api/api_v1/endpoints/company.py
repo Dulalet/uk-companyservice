@@ -87,7 +87,7 @@ def list_companies(
     return companies
 
 
-@router.put("/", status_code=201, response_model=Company)
+@router.patch("/", status_code=201, response_model=Company)
 def update_company(
     *,
     company_in: CompanyUpdate,
@@ -102,7 +102,7 @@ def update_company(
         logger.error(e)
     if not company:
         raise HTTPException(
-            status_code=400, detail=f"Recipe with ID: {company_in.id} not found."
+            status_code=400, detail=f"Company with ID: {company_in.id} not found."
         )
     try:
         updated_company = crud.company.update(
